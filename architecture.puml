@@ -1,0 +1,61 @@
+@startuml
+title Architecture - Yolah App
+
+package "App" {
+  [_layout.tsx] as Layout
+  [index.tsx] as Home
+  [game.tsx] as GameScreen
+  [settings.tsx] as Settings
+}
+
+package "Providers" {
+  [GameSettingsContext] as GameSettings
+  [ProfileContext] as Profile
+}
+
+package "Components" {
+  [Board.tsx] as Board
+  [Square.tsx] as Square
+  [Piece.tsx] as Piece
+  [Score.tsx] as Score
+  [Timer.tsx] as Timer
+  [GameOver.tsx] as GameOver
+  [EndgamePanel.tsx] as Endgame
+  [ChessBackground.tsx] as Background
+}
+
+package "Logic & Hooks" {
+  [game_logic.ts] as Logic
+  [useAI] as AIHook
+  [useMultiplayer] as MultiplayerHook
+}
+
+package "Services & Utils" {
+  [MultiplayerService] as MPService
+  [gameEffects] as Effects
+}
+
+' Relations
+Layout --> GameSettings
+Layout --> Profile
+Layout --> Home
+Layout --> GameScreen
+Home --> GameScreen : navigate
+GameScreen --> Board
+Board --> Square
+Board --> Piece
+Board --> Score
+Board --> Timer
+Board --> GameOver
+Board --> Endgame
+Board --> Background
+Board --> Logic
+Board --> AIHook
+Board --> MultiplayerHook
+Board --> MPService
+Board --> Effects
+AIHook --> Logic
+MultiplayerHook --> MPService
+MPService --> MultiplayerHook : events
+
+@enduml
